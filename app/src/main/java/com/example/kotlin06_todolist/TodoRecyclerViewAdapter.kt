@@ -8,7 +8,7 @@ import com.example.kotlin06_todolist.databinding.ItemTodoBinding
 import com.example.kotlin06_todolist.db.TodoEntity
 import java.util.ArrayList
 
-class TodoRecyclerViewAdapter(private val todoList : ArrayList<TodoEntity>) : RecyclerView.Adapter<TodoRecyclerViewAdapter.MyViewHolder>(){
+class TodoRecyclerViewAdapter(private val todoList : ArrayList<TodoEntity>, private val listener: OnItemLongClickListener) : RecyclerView.Adapter<TodoRecyclerViewAdapter.MyViewHolder>(){
 
     inner class MyViewHolder(binding: ItemTodoBinding) : RecyclerView.ViewHolder(binding.root){
         val tv_importance = binding.tvImportance
@@ -43,6 +43,11 @@ class TodoRecyclerViewAdapter(private val todoList : ArrayList<TodoEntity>) : Re
         }
         holder.tv_importance.text = todoData.importance.toString()
         holder.tv_title.text = todoData.title
+
+        holder.root.setOnLongClickListener {
+            listener.onLongClick(position)
+            false
+        }
     }
 
     override fun getItemCount(): Int {
